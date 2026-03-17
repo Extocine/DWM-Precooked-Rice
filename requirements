@@ -1,0 +1,10 @@
+To Run: xorg git make gcc
+
+For QOL: feh ffmpeg curl flameshot picom mpv amixer pavucontrol kitty neofetch slock playerctl nemo arandr parcellite
+
+For Laptops: brightnessctl acpi
+
+For Status Bar: iwconfig wireless-tools xdotool
+
+More QOL: qbittorrent keepassxc syncthing veracrypt brave discord steam gparted timeshift vlc
+#libxft-dev libxinerama-dev

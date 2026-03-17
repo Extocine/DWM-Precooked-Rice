@@ -1,0 +1,3 @@
+original is the original solution, for folders with several individual image files.
+3.0 is the preferred method, using feh and ffmpeg, loads in iamges in ram, and works with 3 monitors
+xwinwrap requires xwinwrap, directly uses mpv to play a video, and is lightest on system resources, but only works with 1 monitor. Ideal for laptops or something

@@ -1,0 +1,59 @@
+
+#!/bin/bash
+#How To Convert MP4 to PNG/JPG
+#ffmpeg -i PATH/TO/MP4 -s 1280x720 -vf fps=15 FOLDER/out%d.png
+#
+
+#kill the script if it's already running useful if you're constantly restarting x
+for pid in $(pidof -x dynamicwall.sh); do
+     if [ $pid != $$ ]; then
+         kill -9 $pid
+         exit 1
+     fi
+done
+
+#A Prompt to Enter the wallpaper directory
+arg=$1
+if [ -z "$arg" ]; then
+    echo "Here are the folders found in ~/wallpapers/"
+    cd ~/wallpapers/ || { echo "Directory not found"; exit 1; }
+    ls
+    echo "Choose a wallpaper:"
+    read -r choice
+    if [ -d "$choice" ]; then
+        cd "$choice" || { echo "Failed to change directory"; exit 1; }
+    else
+        echo "Directory '$choice' not found."
+        exit 1
+    fi
+else
+    # Check if provided argument is a valid directory
+    if [ -d "$arg" ]; then
+        cd "$arg" || { echo "Failed to change directory"; exit 1; }
+    else
+        echo "Directory '$arg' not found."
+        exit 1
+    fi
+fi
+
+#Get the names of all the pics in the directory
+wallpapers=($(ls -v))
+
+#get the absolute paths of the pics
+for pic in "${wallpapers[@]}"
+ do
+ :
+ wallpath+=($(readlink -f $pic))
+done
+
+while true; do
+
+ for p in "${wallpath[@]}"
+  do
+  :
+  feh --bg-scale $p 
+  sleep 0.01666666666s
+  #sleep 0.00833333333s
+ done
+
+done

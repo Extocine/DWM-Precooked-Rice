@@ -1,0 +1,4 @@
+xwinwrap -ov -ni -nf -un -s -st -sp -b -fs -- \
+mpv -wid WID --loop-file=inf --no-audio --no-border \
+--hwdec=auto --profile=low-latency \
+~/video.mp4

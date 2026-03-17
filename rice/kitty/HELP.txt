@@ -1,0 +1,6 @@
+current-theme.conf	Auto Generates, do not touch
+kitty.config.bak	An Backup File, do not touch
+themes/			A folder with my various themes
+kitty.config		The actual configuration file
+
+TLDR Anything that is not in "themes" should not be touched
