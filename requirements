@@ -1,10 +1,7 @@
-To Run: xorg git make gcc
+To Run: xorg git make gcc libxft-dev libxinerama-dev
 
-For QOL: feh ffmpeg curl flameshot picom mpv amixer pavucontrol kitty neofetch slock playerctl nemo arandr parcellite
+For QOL: feh ffmpeg curl flameshot picom mpv amixer pavucontrol kitty neofetch slock playerctl nemo arandr parcellite wireless-tools xdotool
 
 For Laptops: brightnessctl acpi
 
-For Status Bar: iwconfig wireless-tools xdotool
-
 More QOL: qbittorrent keepassxc syncthing veracrypt brave discord steam gparted timeshift vlc
-#libxft-dev libxinerama-dev
