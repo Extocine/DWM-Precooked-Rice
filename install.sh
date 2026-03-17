@@ -90,7 +90,7 @@ case $DISTRO in
         sudo pacman -Syu --noconfirm "${PKGS[@]}"
         ;;
     fedora)
-        sudo dnf install -y "${PKGS[@]}"
+        sudo dnf install --skip-unavailable -y "${PKGS[@]}"
         ;;
 esac
 
