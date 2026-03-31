@@ -31,6 +31,7 @@ static const char s_base3[]         = "#fdf6e3";
 
 static const char *colors[][3] = {
 	
+
 	/* Original */
 	{ col_gray3, col_gray1, col_gray2 }, // Norm
 	{ col_gray4, col_cyan,  col_cyan  }, // Sel
@@ -42,6 +43,31 @@ static const char *colors[][3] = {
 	/* Light */
 	{ s_base00, s_base3,  s_base02 }, // Norm
 	{ s_base00, s_base2,  s_base02 }, // Sel
+
+	/* Vaporwave */
+	{ "#e0aaff", "#1a0033", "#7b2cbf" }, // Norm
+	{ "#ffffff", "#5a189a", "#c77dff" }, // Sel  
+
+
+	/* Frutiger Aero */
+	{ "#003b44", "#dffcff", "#5aeccf" }, // Norm 
+	{ "#ffffff", "#00cfff", "#00ffa6" }, // Sel
+
+	/* Matrix */
+	{ "#00ff00", "#000000", "#003300" }, // Norm
+	{ "#ffffff", "#001a00", "#00ff00" }, // Sel
+
+	/* Cyberpunk */
+	{ "#00ff9f", "#0a0a0a", "#ff00ff" }, // Norm
+	{ "#ffffff", "#1a1a1a", "#00e5ff" }, // Sel
+
+	/* Sunset */
+	{ "#ffd6a5", "#2b2d42", "#ef476f" }, // Norm
+	{ "#ffffff", "#ef476f", "#ffd166" }, // Sel
+
+	/* Akatsuki */
+	{ "#e0e0e0", "#0a0a0a", "#1a1a1a" }, // Norm
+	{ "#ff2a2a", "#1a0000", "#ff0000" }, // Sel
 
 /*	[SchemeStatus]  = { col_gray3, col_gray1,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { col_gray4, col_cyan,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
@@ -59,19 +85,19 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "discord",     NULL,       NULL,       1 << 2,                0,       -1 },
-	{ "TelegramDesktop", NULL,   NULL,       1 << 2,                0,       -1 },
-	{ "Brave-browser",  NULL,    NULL,       1 << 1,                0,       -1 },
-	{ "brave",  NULL,    NULL,               1 << 1,                0,       -1 },
-	{ "Nemo",	NULL,	NULL,		 1 << 4,		0,	 -1 },
-	{ "Nautilus",	NULL,	NULL,		 1 << 4,		0,	 -1 },
-	{ "steam", NULL,	NULL,		 1 << 3,		0,	 -1 },
-	{ "Spotify", "spotify",	"Spotify",	 1 << 5,		0,	 -1 },
-	{ "pavucontrol", NULL,	NULL,		 1 << 8,		0,	 -1 },
-	{ "KeePassXC", NULL,	NULL,		 1 << 8,		0,	 -1 },
-	{ "Minecraft Launcher", NULL,	NULL,	 1 << 3,		0,	 -1 },
- 	{ "yuzu", NULL,    NULL,          	 1 << 3,                0,       -1 },
-        { "dolphin-emu", NULL,    NULL,          1 << 3,                0,       -1 },
+	{ "discord",     NULL,       NULL,       1 << 2,         0,       -1 },
+	{ "TelegramDesktop", NULL,   NULL,       1 << 2,         0,       -1 },
+	{ "Brave-browser",  NULL,    NULL,       1 << 1,         0,       -1 },
+	{ "brave",  NULL,    NULL,               1 << 1,         0,       -1 },
+	{ "Nemo",	NULL,	NULL,				 1 << 4,	     0,	 	  -1 },
+	{ "Nautilus",	NULL,	NULL,			 1 << 4,		 0,	 	  -1 },
+	{ "steam", NULL,	NULL,				 1 << 3,		 0,	 	  -1 },
+	{ "Spotify", "spotify",	"Spotify",	 	 1 << 5,		 0,	 	  -1 },
+	{ "pavucontrol", NULL,	NULL,		 	 1 << 8,		 0,		  -1 },
+	{ "KeePassXC", NULL,	NULL,		 	 1 << 8,		 0,		  -1 },
+	{ "Minecraft Launcher", NULL,	NULL,	 1 << 3,		 0,		  -1 },
+ 	{ "yuzu", NULL,    NULL,          	 	 1 << 3,         0,   	  -1 },
+    { "dolphin-emu", NULL,    NULL,          1 << 3,         0,   	  -1 },
 };
 
 /* layout(s) */
