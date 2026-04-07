@@ -1,4 +1,7 @@
-xwinwrap -ov -ni -nf -un -s -st -sp -b -fs -- \
-mpv -wid WID --loop-file=inf --no-audio --no-border \
---hwdec=auto --profile=low-latency \
-~/video.mp4
+#!/bin/bash
+
+# Use $1 so you can pass the file path as an argument like you did
+xwinwrap -g 1920x1080 -ni -ov -s -st -sp -b -nf -- \
+mpv -wid WID --loop --no-audio --no-border --no-osc --no-osd-bar \
+--vo=gpu --hwdec=auto --input-vo-keyboard=no "$1"
+#xwinwrap -g 1366x768 -ni -ov -s -st -sp -b -nf -- mpv --wid=%WID --loop --no-audio --no-border --no-osc --no-osd-bar --vo=gpu --hwdec=auto 
