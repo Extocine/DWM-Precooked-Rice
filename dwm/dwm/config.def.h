@@ -224,7 +224,7 @@ static const Key keys[] = {
         {MODKEY|ShiftMask|ControlMask,  XK_c,      spawn,         SHCMD("xkill") },
         {MODKEY|ShiftMask|ControlMask,  XK_Return, spawn,         SHCMD("cool-retro-term -p ~/.config/cool-retro-term/custom.json") },
         {Mod4Mask,                      XK_e,      spawn,         SHCMD("nemo") },
-        {Mod4Mask,                      XK_period, spawn,         SHCMD("gnome-characters") },
+        {Mod4Mask,                      XK_period, spawn,         SHCMD("dwm-emoji.sh") },
 	{0, XF86XK_AudioRaiseVolume,          	   spawn,         SHCMD("amixer set Master 5%+") },
         {0, XF86XK_AudioMute,                      spawn,         SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
         {0, XF86XK_AudioLowerVolume,          	   spawn,         SHCMD("amixer set Master 5%-") },
@@ -237,6 +237,8 @@ static const Key keys[] = {
 	{0, XF86XK_MonBrightnessUp, 		   spawn,	  SHCMD("brightnessctl set +10%")},
 	{0, XF86XK_MonBrightnessDown, 		   spawn, 	  SHCMD("brightnessctl set 10%-")},
         {Mod4Mask,                       XK_l,     spawn,         SHCMD("slock") },
+{ Mod1Mask,                       XK_F4,      spawn,         SHCMD("dwm-power.sh") },
+{ ControlMask|Mod1Mask,           XK_Delete,  spawn,         SHCMD("dwm-power.sh") },
 };
 
 /* button definitions */
