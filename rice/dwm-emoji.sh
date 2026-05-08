@@ -1,5 +1,5 @@
 #!/bin/sh
-
+#requires xclip as a dependency
 emoji_file="$HOME/.cache/emoji_list"
 
 if [ ! -f "$emoji_file" ]; then
