@@ -1,176 +1,89 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -e
 
-echo "[*] Detecting distribution..."
+echo "==> Starting DWM rice installation..."
 
-# ----------------------------
-# Detect distro
-# ----------------------------
-if [ -f /etc/debian_version ]; then
-    DISTRO="debian"
-elif [ -f /etc/arch-release ]; then
-    DISTRO="arch"
-elif [ -f /etc/fedora-release ]; then
-    DISTRO="fedora"
+# Detect package manager
+if command -v apt >/dev/null 2>&1; then
+    PKG_INSTALL="sudo apt install -y"
+    PKGS="xorg git make gcc libxft-dev libxinerama-dev"
+elif command -v pacman >/dev/null 2>&1; then
+    PKG_INSTALL="sudo pacman -S --noconfirm"
+    PKGS="xorg-server xorg-xinit git make gcc libxft libxinerama"
+elif command -v dnf >/dev/null 2>&1; then
+    PKG_INSTALL="sudo dnf install -y"
+    PKGS="xorg-x11-server-Xorg git make gcc libXft-devel libXinerama-devel"
 else
-    echo "[!] Unsupported distro"
+    echo "Unsupported package manager."
     exit 1
 fi
 
-echo "[*] Detected: $DISTRO"
+echo "==> Installing dependencies..."
+$PKG_INSTALL $PKGS
 
-# ----------------------------
-# User choice
-# ----------------------------
-echo ""
-read -rp "Install type (minimal/full) [m/f]: " INSTALL_TYPE
-echo ""
+# Create config directories
+echo "==> Creating config directories..."
+mkdir -p ~/.config/dwm
+mkdir -p ~/.config/kitty
 
-# ----------------------------
-# Base package definitions
-# ----------------------------
-
-BASE_PKGS=(xorg git make gcc libxft libxinerama)
-
-FULL_PKGS=(
-    feh ffmpeg curl flameshot picom mpv
-    alsa-utils pavucontrol kitty neofetch slock playerctl
-    nemo arandr parcellite
-    brightnessctl acpi
-    wireless-tools xdotool
-)
-
-PERSONAL_PKGS=(
-    qbittorrent keepassxc syncthing veracrypt
-    brave-browser discord steam gparted timeshift vlc
-)
-
-# ----------------------------
-# Distro mapping
-# ----------------------------
-
-case $DISTRO in
-    debian)
-        BASE_PKGS=(xorg git make gcc libxft-dev libxinerama-dev)
-        FULL_PKGS=("${FULL_PKGS[@]}")
-        ;;
-    arch)
-        BASE_PKGS=(xorg-server xorg-xinit git make gcc libxft libxinerama)
-        FULL_PKGS=("${FULL_PKGS[@]/wireless-tools/wireless_tools}")
-        ;;
-    fedora)
-        BASE_PKGS=(xorg-x11-server-Xorg xorg-x11-xinit git make gcc libXft-devel libXinerama-devel)
-        FULL_PKGS=("${FULL_PKGS[@]}")
-        ;;
-esac
-
-# ----------------------------
-# Build package list
-# ----------------------------
-
-PKGS=("${BASE_PKGS[@]}")
-
-if [[ "$INSTALL_TYPE" =~ ^[Ff]$ ]]; then
-    PKGS+=("${FULL_PKGS[@]}")
-fi
-
-# ----------------------------
-# Install packages
-# ----------------------------
-
-echo "[*] Installing packages..."
-
-case $DISTRO in
-    debian)
-        sudo apt update
-        sudo apt install -y "${PKGS[@]}"
-        ;;
-    arch)
-        sudo pacman -Syu --noconfirm "${PKGS[@]}"
-        ;;
-    fedora)
-        sudo dnf install --skip-unavailable -y "${PKGS[@]}"
-        ;;
-esac
-
-# ----------------------------
-# Setup config
-# ----------------------------
-
-CONFIG_DIR="$HOME/.config/dwm"
-
-echo "[*] Copying config..."
-mkdir -p "$CONFIG_DIR"
-cp -r ./* "$CONFIG_DIR"
-
-cd "$CONFIG_DIR"
-
-# Apply ricing
-if [ -d "rice" ]; then
-    echo "[*] Applying ricing..."
-    mv rice/kitty "$HOME/.config/" 2>/dev/null || true
-    mv rice/picom.conf "$HOME/.config/" 2>/dev/null || true
-fi
-
-# ----------------------------
-# Build DWM + dmenu
-# ----------------------------
-
-echo "[*] Building DWM..."
-
-if [ -d "$CONFIG_DIR/dwm/dwm" ]; then
-    cd "$CONFIG_DIR/dwm/dwm"
-else
-    echo "[!] Could not find dwm source"
-    exit 1
-fi
-
+# Build and install suckless software
+echo "==> Installing dwm..."
+cd dwm/dwm
 sudo make clean install
 
-echo "[*] Building dmenu..."
-
-if [ -d "$CONFIG_DIR/dwm/dmenu" ]; then
-    cd "$CONFIG_DIR/dwm/dmenu"
-else
-    echo "[!] Could not find dmenu source"
-    exit 1
-fi
-
+echo "==> Installing dmenu..."
+cd ../dmenu
 sudo make clean install
 
-# ----------------------------
-# Xinit setup
-# ----------------------------
+echo "==> Installing slock..."
+cd ../slock
+sudo make clean install
 
-cd "$HOME"
+echo "==> Installing st..."
+cd ../st
+sudo make clean install
 
-echo "[*] Setting up start command..."
+# Return to root directory
+cd ../../
 
-grep -qxF "alias startdwm='startx .xinitrcdwm'" ~/.bashrc || \
-echo "alias startdwm='startx .xinitrcdwm'" >> ~/.bashrc
+echo "==> Copying configuration files..."
 
-cat > ~/.xinitrcdwm << 'EOF'
-exec dwm & wmpid=$!
+# Copy suckless source folders into ~/.config/dwm
+cp -r dwm/dwm ~/.config/dwm/
+cp -r dwm/dmenu ~/.config/dwm/
+cp -r dwm/slock ~/.config/dwm/
+cp -r dwm/st ~/.config/dwm/
 
-sleep 3
-$HOME/.config/dwm/rice/startupscript.sh
+# Copy kitty config
+cp -r rice/kitty ~/.config/
 
-wait $wmpid
-EOF
+# Copy live wallpapers
+cp -r rice/livewallpapers ~/.config/dwm/
 
-# ----------------------------
-# Personal app suggestions
-# ----------------------------
+# Copy picom config
+cp rice/picom.conf ~/.config/
 
-echo ""
-echo "[*] Suggested personal apps (not installed):"
-echo "${PERSONAL_PKGS[@]}"
-echo ""
+# Copy scripts
+cp rice/dwm-emoji.sh ~/.config/dwm/
+cp rice/dwm-power.sh ~/.config/dwm/
+cp rice/dwm-status.sh ~/.config/dwm/
 
-# ----------------------------
-# Done
-# ----------------------------
+# Make scripts executable
+chmod +x ~/.config/dwm/*.sh
+chmod +x ~/.config/dwm/livewallpapers/*.sh
 
-echo "[✓] Installation complete!"
-echo "Run: startdwm"
+echo
+echo "========================================"
+echo "      INSTALLATION COMPLETE!"
+echo "========================================"
+echo
+echo "Recommended quality-of-life packages:"
+echo
+echo "feh ffmpeg curl flameshot picom mpv alsa-utils pavucontrol kitty neofetch slock playerctl nemo arandr parcellite brightnessctl acpi wireless-tools xdotool"
+echo
+echo "Extra desktop software:"
+echo
+echo "qbittorrent keepassxc syncthing veracrypt brave-browser discord steam gparted timeshift vlc plymouth"
+echo
+echo "You can now launch dwm using startx or your display manager."
