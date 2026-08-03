@@ -145,8 +145,7 @@ refresh(Display *dpy, Window win , int screen, struct tm time, cairo_t* cr, cair
 	int xpos,ypos;
 	xpos=DisplayWidth(dpy, screen)/4;
 	ypos=DisplayHeight(dpy, screen)/2;
-	sprintf(tm,"%02d/%02d/%d %02d:%02d",time.tm_mday,time.tm_mon + 1,time.tm_year+1900,time.tm_hour,time.tm_min);
-	XClearWindow(dpy, win);
+    strftime(tm, sizeof(tm), "%a, %b %I:%M:%S %p", &time);	XClearWindow(dpy, win);
     cairo_set_source_rgb(cr, textcolorred, textcolorgreen, textcolorblue);
 	cairo_select_font_face(cr, textfamily, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
     cairo_set_font_size(cr, textsize);
