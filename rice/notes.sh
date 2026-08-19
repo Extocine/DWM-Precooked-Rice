@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Base directory (override with export NOTES_DIR=... or pass as argument)
-NOTES_DIR="${1:-/home/extocine/Programs/Sync/Notes}"
+NOTES_DIR="${1:-/home/$USER/.notes}"
 
 while true; do
     # Safely collect basenames of files & directories (excluding hidden ones)
