@@ -4,18 +4,20 @@
 NOTES_DIR="${1:-/home/$USER/.notes}"
 
 while true; do
-    # Safely collect basenames of files & directories (excluding hidden ones)
+    # 1. Collect basenames of files & directories in current dir
     items=()
-    shopt -s nullglob
     for item in "$NOTES_DIR"/*; do
         if [[ -e "$item" ]]; then
             name=$(basename "$item")
-            if [[ "$name" != .* ]]; then
-                items+=("$name")
+            if [[ "$name" != .* ]]; then  # Skip hidden items
+                if [[ -d "$item" ]]; then
+                    items+=("${name}/")  # Add trailing slash for directories
+                else
+                    items+=("$name")     # No slash for files
+                fi
             fi
         fi
     done
-    shopt -u nullglob
 
     # Show dmenu and capture selection
     selection=$(printf "%s\n" "${items[@]}" | dmenu -p "Select Note or Directory:" \
